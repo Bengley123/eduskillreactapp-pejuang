@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import bgForm from "../../assets/bgform2.png";
 import { FaEnvelope, FaUser, FaSignature, FaPhone, FaLock } from 'react-icons/fa';
-//import bgForm from "../../assets/bgform.jpg";
 
 
 const RegisterPage = () => {
@@ -8,11 +9,11 @@ const RegisterPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div
         className="w-full h-screen bg-cover bg-center flex items-center justify-center"
-        //style={{ backgroundImage: `url(${bgForm})` }}
+        style={{ backgroundImage: `url(${bgForm})` }}
       >
         <div className="bg-white p-8 rounded-md shadow-md w-[350px]">
           <h2 className="text-2xl font-semibold text-center mb-1">EduSkill</h2>
-          <p className="text-sm text-center text-blue-600 mb-4 cursor-pointer hover:underline">Register</p>
+          <p className="text-sm text-center text-blue-600 mb-4">Register</p>
 
           <form className="space-y-3">
             <div className="flex items-center border border-gray-300 rounded-md px-3 py-2">
@@ -78,7 +79,10 @@ const RegisterPage = () => {
           </form>
 
           <p className="text-xs text-center text-gray-600 mt-3">
-            Sudah memiliki akun? <span className="text-blue-600 hover:underline cursor-pointer">Login sekarang</span>
+            Sudah memiliki akun?{" "}
+            <Link to="/login" className="text-blue-600 hover:underline">
+              Login sekarang
+            </Link>
           </p>
         </div>
       </div>

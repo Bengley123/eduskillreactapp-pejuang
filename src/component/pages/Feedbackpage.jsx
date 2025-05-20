@@ -1,10 +1,6 @@
 import React from "react";
-//import { useParams } from "react-router-dom";
-// import Heading from "../Elements/Head/Heading";
-// import Paragraph from "../Elements/Paragraph/ParagraphText";
 import Button from "../Elements/Button";
 import ImgCard from "../../assets/imgcard1.jpg";
-//import imgcard from "../assets/imgcard.jpg"; // gunakan gambar yang sama
 
 const DetailPelatihan = () => {
   //const { id } = useParams(); // id di sini adalah judul dari pelatihan

@@ -1,13 +1,60 @@
 import React, { useState } from 'react';
-import { FaSearch, FaPlus } from 'react-icons/fa';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaSearch, FaPlus, FaUserCircle, FaTimes, FaTrashAlt, FaEdit, FaSave, FaFileAlt, FaFileImage, FaIdCard } from 'react-icons/fa';
 import LogoBinaEssa from '../../assets/logo-bina-essa1.jpg';
 
 const dataPesertaAwal = [
-  { nama: 'Budi Belus', pelatihan: 'Penjahitan profesional siap industri Ekspor', status: 'Ditinjau' },
-  { nama: 'David Dagu', pelatihan: 'Penjahitan profesional siap industri Ekspor', status: 'Ditolak' },
-  { nama: 'Ujang Kijang', pelatihan: 'Penjahitan profesional siap industri Ekspor', status: 'Diterima' },
-  { nama: 'Deddy Botak', pelatihan: 'Penjahitan profesional siap industri Ekspor', status: 'Ditinjau' },
+  { 
+    nama: 'Budi Belus', 
+    pelatihan: 'Penjahitan profesional siap industri Ekspor', 
+    status: 'Diterima',
+    email: 'budi.belus@gmail.com',
+    telepon: '081234567890',
+    alamat: 'Jl. Merdeka No. 123, Bandung',
+    tanggalDaftar: '15 Mei 2025',
+    ktp: 'ktp_budi_belus.pdf',
+    kk: 'kk_budi_belus.pdf',
+    pasPhoto: 'photo_budi_belus.jpg',
+    ijazah: 'ijazah_budi_belus.pdf'
+  },
+  { 
+    nama: 'David Dagu', 
+    pelatihan: 'Penjahitan profesional siap industri Ekspor', 
+    status: 'Diterima',
+    email: 'david.dagu@gmail.com',
+    telepon: '081298765432',
+    alamat: 'Jl. Pahlawan No. 45, Bandung',
+    tanggalDaftar: '10 Mei 2025',
+    ktp: 'ktp_david_dagu.pdf',
+    kk: 'kk_david_dagu.pdf',
+    pasPhoto: 'photo_david_dagu.jpg',
+    ijazah: 'ijazah_david_dagu.pdf'
+  },
+  { 
+    nama: 'Ujang Kijang', 
+    pelatihan: 'Penjahitan profesional siap industri Ekspor', 
+    status: 'Diterima',
+    email: 'ujang.kijang@gmail.com',
+    telepon: '081387654321',
+    alamat: 'Jl. Diponegoro No. 78, Bandung',
+    tanggalDaftar: '5 Mei 2025',
+    ktp: 'ktp_ujang_kijang.pdf',
+    kk: 'kk_ujang_kijang.pdf',
+    pasPhoto: 'photo_ujang_kijang.jpg',
+    ijazah: 'ijazah_ujang_kijang.pdf'
+  },
+  { 
+    nama: 'Deddy Botak', 
+    pelatihan: 'Penjahitan profesional siap industri Ekspor', 
+    status: 'Diterima',
+    email: 'deddy.botak@gmail.com',
+    telepon: '081345678901',
+    alamat: 'Jl. Sudirman No. 90, Bandung',
+    tanggalDaftar: '1 Mei 2025',
+    ktp: 'ktp_deddy_botak.pdf',
+    kk: 'kk_deddy_botak.pdf',
+    pasPhoto: 'photo_deddy_botak.jpg',
+    ijazah: 'ijazah_deddy_botak.pdf'
+  },
 ];
 
 const getStatusColor = (status) => {
@@ -19,37 +66,135 @@ const getStatusColor = (status) => {
   }
 };
 
+const DocumentIcon = ({ type }) => {
+  switch (type) {
+    case 'ktp':
+      return <FaIdCard className="text-blue-500" title="KTP" />;
+    case 'kk':
+      return <FaFileAlt className="text-green-500" title="KK" />;
+    case 'pasPhoto':
+      return <FaFileImage className="text-purple-500" title="Pas Photo" />;
+    case 'ijazah':
+      return <FaFileAlt className="text-orange-500" title="Ijazah" />;
+    default:
+      return <FaFileAlt />;
+  }
+};
+
+const DocumentLink = ({ filename }) => {
+  if (!filename) return <span className="text-gray-400">-</span>;
+  
+  return (
+    <a 
+      href={`/documents/${filename}`} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="text-blue-500 hover:underline flex items-center gap-1"
+    >
+      <DocumentIcon type={filename.split('_')[0]} />
+      <span className="text-xs">Lihat</span>
+    </a>
+  );
+};
+
 export default function AdminPesertaPage() {
   const [showForm, setShowForm] = useState(false);
   const [dataPeserta, setDataPeserta] = useState(dataPesertaAwal);
-  const [form, setForm] = useState({ nama: '', pelatihan: '', status: 'Ditinjau' });
+  const [form, setForm] = useState({ 
+    nama: '', 
+    pelatihan: '', 
+    status: 'Ditinjau',
+    email: '',
+    telepon: '',
+    alamat: '',
+    tanggalDaftar: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+    ktp: '',
+    kk: '',
+    pasPhoto: '',
+    ijazah: ''
+  });
+  const [selectedPeserta, setSelectedPeserta] = useState(null);
+  const [editedPeserta, setEditedPeserta] = useState(null);
+  const [showDetail, setShowDetail] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setDataPeserta([...dataPeserta, form]);
-    setForm({ nama: '', pelatihan: '', status: 'Ditinjau' });
+    setForm({ 
+      nama: '', 
+      pelatihan: '', 
+      status: 'Ditinjau',
+      email: '',
+      telepon: '',
+      alamat: '',
+      tanggalDaftar: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+      ktp: '',
+      kk: '',
+      pasPhoto: '',
+      ijazah: ''
+    });
     setShowForm(false);
+  };
+
+  const handleViewDetail = (peserta) => {
+    setSelectedPeserta({...peserta});
+    setEditedPeserta({...peserta});
+    setShowDetail(true);
+    setIsEditing(false);
+  };
+
+  const handleDelete = (index) => {
+    if (window.confirm('Apakah Anda yakin ingin menghapus peserta ini?')) {
+      const newData = [...dataPeserta];
+      newData.splice(index, 1);
+      setDataPeserta(newData);
+      setShowDetail(false);
+    }
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancelEdit = () => {
+    setEditedPeserta({...selectedPeserta});
+    setIsEditing(false);
+  };
+
+  const handleSaveEdit = () => {
+    const index = dataPeserta.findIndex(p => p.nama === selectedPeserta.nama);
+    if (index !== -1) {
+      const newData = [...dataPeserta];
+      newData[index] = {...editedPeserta};
+      setDataPeserta(newData);
+      setSelectedPeserta({...editedPeserta});
+      setIsEditing(false);
+    }
+  };
+
+  const handleInputChange = (field, value) => {
+    setEditedPeserta({...editedPeserta, [field]: value});
+  };
+
+  const handleFileUpload = (field, e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setEditedPeserta({
+        ...editedPeserta,
+        [field]: file.name
+      });
+    }
   };
 
   return (
     <div className="flex min-h-screen">
       {/* Main content */}
       <div className="flex-1 flex flex-col overflow-y-auto">
-        {/* Navbar */}
-        <header className="bg-blue-500 p-4">
-            <div className="flex justify-end">
-                <button className="bg-white text-gray-700 px-4 py-2 rounded-lg shadow-md flex items-center space-x-2 hover:bg-gray-100 transition">
-                <FaUserCircle className="text-xl" />
-                <span>Profile</span>
-                </button>
-            </div>
-        </header>
-
-
         {/* Content */}
         <main className="p-6 overflow-y-auto">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">Peserta</h2>
+            <h1 className="text-2xl font-bold mb-6">Peserta</h1>
             <button
               onClick={() => setShowForm(true)}
               className="bg-blue-500 text-white px-4 py-2 rounded inline-flex items-center gap-2"
@@ -66,7 +211,11 @@ export default function AdminPesertaPage() {
                   <th className="text-left p-2">Nama</th>
                   <th className="text-left p-2">Pelatihan</th>
                   <th className="text-left p-2">Status</th>
-                  <th className="text-left p-2">More</th>
+                  <th className="text-left p-2">KTP</th>
+                  <th className="text-left p-2">KK</th>
+                  <th className="text-left p-2">Pas Photo</th>
+                  <th className="text-left p-2">Ijazah</th>
+                  <th className="text-left p-2">Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -75,7 +224,26 @@ export default function AdminPesertaPage() {
                     <td className="p-2">{peserta.nama}</td>
                     <td className="p-2">{peserta.pelatihan}</td>
                     <td className={`p-2 ${getStatusColor(peserta.status)}`}>{peserta.status}</td>
-                    <td className="p-2"><FaSearch /></td>
+                    <td className="p-2">
+                      <DocumentLink filename={peserta.ktp} />
+                    </td>
+                    <td className="p-2">
+                      <DocumentLink filename={peserta.kk} />
+                    </td>
+                    <td className="p-2">
+                      <DocumentLink filename={peserta.pasPhoto} />
+                    </td>
+                    <td className="p-2">
+                      <DocumentLink filename={peserta.ijazah} />
+                    </td>
+                    <td className="p-2">
+                      <button 
+                        onClick={() => handleViewDetail(peserta)}
+                        className="text-gray-500 hover:text-blue-500 transition-colors"
+                      >
+                        <FaSearch />
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -96,6 +264,18 @@ export default function AdminPesertaPage() {
                   <input type="text" value={form.pelatihan} onChange={(e) => setForm({ ...form, pelatihan: e.target.value })} className="w-full p-2 border rounded" required />
                 </div>
                 <div>
+                  <label className="block text-sm">Email</label>
+                  <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full p-2 border rounded" required />
+                </div>
+                <div>
+                  <label className="block text-sm">Telepon</label>
+                  <input type="text" value={form.telepon} onChange={(e) => setForm({ ...form, telepon: e.target.value })} className="w-full p-2 border rounded" required />
+                </div>
+                <div>
+                  <label className="block text-sm">Alamat</label>
+                  <textarea value={form.alamat} onChange={(e) => setForm({ ...form, alamat: e.target.value })} className="w-full p-2 border rounded" required />
+                </div>
+                <div>
                   <label className="block text-sm">Status</label>
                   <select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })} className="w-full p-2 border rounded">
                     <option value="Ditinjau">Ditinjau</option>
@@ -103,11 +283,239 @@ export default function AdminPesertaPage() {
                     <option value="Ditolak">Ditolak</option>
                   </select>
                 </div>
+                <div>
+                  <label className="block text-sm">KTP</label>
+                  <input type="file" onChange={(e) => setForm({ ...form, ktp: e.target.files[0]?.name || '' })} className="w-full p-2 border rounded" />
+                </div>
+                <div>
+                  <label className="block text-sm">KK</label>
+                  <input type="file" onChange={(e) => setForm({ ...form, kk: e.target.files[0]?.name || '' })} className="w-full p-2 border rounded" />
+                </div>
+                <div>
+                  <label className="block text-sm">Pas Photo</label>
+                  <input type="file" onChange={(e) => setForm({ ...form, pasPhoto: e.target.files[0]?.name || '' })} className="w-full p-2 border rounded" />
+                </div>
+                <div>
+                  <label className="block text-sm">Ijazah</label>
+                  <input type="file" onChange={(e) => setForm({ ...form, ijazah: e.target.files[0]?.name || '' })} className="w-full p-2 border rounded" />
+                </div>
                 <div className="flex justify-end gap-2">
                   <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 bg-gray-300 rounded">Batal</button>
                   <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">Simpan</button>
                 </div>
               </form>
+            </div>
+          )}
+
+          {/* Detail Modal */}
+          {showDetail && selectedPeserta && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+              <div className="bg-white rounded-lg shadow-lg p-4 w-full max-w-md mx-auto">
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="text-lg font-semibold">Detail Peserta</h3>
+                  <button 
+                    onClick={() => setShowDetail(false)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <FaTimes />
+                  </button>
+                </div>
+                
+                <div className="space-y-3 mb-4 max-h-80 overflow-y-auto pr-1">
+                  <div>
+                    <p className="text-xs text-gray-500">Nama Lengkap</p>
+                    {isEditing ? (
+                      <input 
+                        type="text" 
+                        value={editedPeserta.nama}
+                        onChange={(e) => handleInputChange('nama', e.target.value)}
+                        className="w-full p-1.5 border rounded mt-1 text-sm"
+                      />
+                    ) : (
+                      <p className="font-medium text-sm">{selectedPeserta.nama}</p>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">Email</p>
+                    {isEditing ? (
+                      <input 
+                        type="email" 
+                        value={editedPeserta.email}
+                        onChange={(e) => handleInputChange('email', e.target.value)}
+                        className="w-full p-1.5 border rounded mt-1 text-sm"
+                      />
+                    ) : (
+                      <p className="font-medium text-sm">{selectedPeserta.email}</p>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">Telepon</p>
+                    {isEditing ? (
+                      <input 
+                        type="text" 
+                        value={editedPeserta.telepon}
+                        onChange={(e) => handleInputChange('telepon', e.target.value)}
+                        className="w-full p-1.5 border rounded mt-1 text-sm"
+                      />
+                    ) : (
+                      <p className="font-medium text-sm">{selectedPeserta.telepon}</p>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">Alamat</p>
+                    {isEditing ? (
+                      <textarea 
+                        value={editedPeserta.alamat}
+                        onChange={(e) => handleInputChange('alamat', e.target.value)}
+                        className="w-full p-1.5 border rounded mt-1 text-sm"
+                        rows="2"
+                      />
+                    ) : (
+                      <p className="font-medium text-sm">{selectedPeserta.alamat}</p>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">Pelatihan</p>
+                    {isEditing ? (
+                      <input 
+                        type="text" 
+                        value={editedPeserta.pelatihan}
+                        onChange={(e) => handleInputChange('pelatihan', e.target.value)}
+                        className="w-full p-1.5 border rounded mt-1 text-sm"
+                      />
+                    ) : (
+                      <p className="font-medium text-sm">{selectedPeserta.pelatihan}</p>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">Tanggal Daftar</p>
+                    <p className="font-medium text-sm">{selectedPeserta.tanggalDaftar}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">Status</p>
+                    {isEditing ? (
+                      <select
+                        value={editedPeserta.status}
+                        onChange={(e) => handleInputChange('status', e.target.value)}
+                        className="w-full p-1.5 border rounded mt-1 text-sm"
+                      >
+                        <option value="Ditinjau">Ditinjau</option>
+                        <option value="Diterima">Diterima</option>
+                        <option value="Ditolak">Ditolak</option>
+                      </select>
+                    ) : (
+                      <p className={`font-medium text-sm ${getStatusColor(selectedPeserta.status)}`}>
+                        {selectedPeserta.status}
+                      </p>
+                    )}
+                  </div>
+                  
+                  {/* Dokumen */}
+                  <div>
+                    <p className="text-xs text-gray-500">KTP</p>
+                    {isEditing ? (
+                      <div>
+                        <DocumentLink filename={editedPeserta.ktp} />
+                        <input 
+                          type="file" 
+                          onChange={(e) => handleFileUpload('ktp', e)}
+                          className="w-full p-1 border rounded mt-1 text-xs"
+                        />
+                      </div>
+                    ) : (
+                      <DocumentLink filename={selectedPeserta.ktp} />
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">KK</p>
+                    {isEditing ? (
+                      <div>
+                        <DocumentLink filename={editedPeserta.kk} />
+                        <input 
+                          type="file" 
+                          onChange={(e) => handleFileUpload('kk', e)}
+                          className="w-full p-1 border rounded mt-1 text-xs"
+                        />
+                      </div>
+                    ) : (
+                      <DocumentLink filename={selectedPeserta.kk} />
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">Pas Photo</p>
+                    {isEditing ? (
+                      <div>
+                        <DocumentLink filename={editedPeserta.pasPhoto} />
+                        <input 
+                          type="file" 
+                          onChange={(e) => handleFileUpload('pasPhoto', e)}
+                          className="w-full p-1 border rounded mt-1 text-xs"
+                        />
+                      </div>
+                    ) : (
+                      <DocumentLink filename={selectedPeserta.pasPhoto} />
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">Ijazah</p>
+                    {isEditing ? (
+                      <div>
+                        <DocumentLink filename={editedPeserta.ijazah} />
+                        <input 
+                          type="file" 
+                          onChange={(e) => handleFileUpload('ijazah', e)}
+                          className="w-full p-1 border rounded mt-1 text-xs"
+                        />
+                      </div>
+                    ) : (
+                      <DocumentLink filename={selectedPeserta.ijazah} />
+                    )}
+                  </div>
+                </div>
+                
+                <div className="flex justify-end gap-2">
+                  {isEditing ? (
+                    <>
+                      <button
+                        onClick={handleCancelEdit}
+                        className="bg-gray-300 hover:bg-gray-400 px-3 py-1.5 rounded text-sm"
+                      >
+                        Batal
+                      </button>
+                      <button
+                        onClick={handleSaveEdit}
+                        className="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded inline-flex items-center gap-1 text-sm"
+                      >
+                        <FaSave size={14} /> Simpan
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => {
+                          const index = dataPeserta.findIndex(p => p.nama === selectedPeserta.nama);
+                          if (index !== -1) handleDelete(index);
+                        }}
+                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded inline-flex items-center gap-1 text-sm"
+                      >
+                        <FaTrashAlt size={14} /> Hapus
+                      </button>
+                      <button
+                        onClick={handleEdit}
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded inline-flex items-center gap-1 text-sm"
+                      >
+                        <FaEdit size={14} /> Edit
+                      </button>
+                      <button
+                        onClick={() => setShowDetail(false)}
+                        className="bg-gray-300 hover:bg-gray-400 px-3 py-1.5 rounded text-sm"
+                      >
+                        Tutup
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
           )}
         </main>

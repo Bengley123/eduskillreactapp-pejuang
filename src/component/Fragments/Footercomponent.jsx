@@ -5,7 +5,7 @@ import SocialIcons from "../Elements/FootWeb/SocialIcons";
 
 const FooterComponent = () => {
   return (
-    <footer className="bg-blue-500 text-white py-10 px-6">
+    <footer className="bg-[#305CDE] py-3 shadow text-white py-9 px-6">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 flex justify-between items-center">
         <ContactInfo />
         <ResourcesLinks />

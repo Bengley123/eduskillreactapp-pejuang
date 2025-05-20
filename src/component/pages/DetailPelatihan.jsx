@@ -1,13 +1,17 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Heading from "../Elements/Head/Heading";
 import Paragraph from "../Elements/Paragraph/ParagraphText";
 import Button from "../Elements/Button";
 import ImgCard from "../../assets/imgcard1.jpg";
-//import imgcard from "../assets/imgcard.jpg"; // gunakan gambar yang sama
 
 const DetailPelatihan = () => {
-  const { id } = useParams(); // id di sini adalah judul dari pelatihan
+  const { id } = useParams();
+  const navigate = useNavigate(); // tambahkan useNavigate
+
+  const handleDaftar = () => {
+    navigate("/daftar"); // arahkan ke halaman /daftar
+  };
 
   return (
     <div className="max-w-5xl mx-auto my-10 px-4 space-y-8">
@@ -40,13 +44,16 @@ const DetailPelatihan = () => {
       <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
         <Heading>Deskripsi Lengkap</Heading>
         <Paragraph>
-          Ini adalah deskripsi lengkap mengenai pelatihan {id}. Di sini kamu bisa mempelajari berbagai materi bermanfaat, mengikuti pelatihan secara interaktif, dan mendapatkan sertifikat setelah menyelesaikan modul.
+          Ini adalah deskripsi lengkap mengenai pelatihan {id}. Di sini kamu
+          bisa mempelajari berbagai materi bermanfaat, mengikuti pelatihan
+          secara interaktif, dan mendapatkan sertifikat setelah menyelesaikan
+          modul.
         </Paragraph>
       </div>
 
       {/* Tombol */}
       <div className="mt-8 flex justify-center">
-        <Button onClick={() => alert("Pelatihan dimulai!")}>
+        <Button onClick={handleDaftar}>
           Daftar Sekarang
         </Button>
       </div>

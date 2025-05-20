@@ -1,10 +1,7 @@
 import React from "react";
-//import CarouselComponent from "../Carouselcomponent";
-//import CardPelatihan from "../Cardpelatihan";
 import CardPelatihan from "../Fragments/CardPelatihan";
 import CarouselComponent from "../Elements/Slideimg/Carouselcomponent";
-//import SectionWrapper from "../Sectionwrapper";
-// import FooterComponent from "../Footercomponent";
+
 
 const LandingPage = () => {
   return (

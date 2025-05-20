@@ -10,9 +10,9 @@ const CardBody = ({ title, description, image, fullDescription }) => {
   const handleClick = () => {
     navigate(`/pelatihan/${encodeURIComponent(title)}`, {
       state: {
+        title,
         image,
         fullDescription,
-        title,
       },
     });
   };
@@ -21,10 +21,7 @@ const CardBody = ({ title, description, image, fullDescription }) => {
     <div className="p-4">
       <Heading>{title}</Heading>
       <Paragraph>{description}</Paragraph>
-      <Button
-        onClick={handleClick}
-        style={{ width: "260px", height: "40px" }}
-      >
+      <Button onClick={handleClick} className="w-full h-10">
         Ikut Pelatihan
       </Button>
     </div>

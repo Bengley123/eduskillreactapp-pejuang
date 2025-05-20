@@ -1,5 +1,4 @@
 import React from "react";
-import ImgCard from "../../assets/imgcard1.jpg";
 
 const StatusPendaftaran = ({ title, tanggal, status }) => {
     // Warna tombol sesuai status
