@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { FaUser, FaLock, FaExclamationCircle } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-//import bgForm from "../../assets/bgform.jpg";
+import bgleft from "../../assets/bgkiri-login-regis.png";
+import bgright from "../../assets/bgkanan-login-regis.png";
 
 // Akun yang telah ditentukan
 const accounts = [
+  { username: 'ketua', password: 'password', role: 'ketua' },
   { username: 'admin', password: 'password', role: 'admin' },
   { username: 'user123', password: 'password', role: 'user' }
 ];
@@ -24,8 +26,10 @@ const LoginPage = () => {
 
     if (isLoggedIn === 'true') {
       if (role === 'admin') {
-        navigate('/adpeserta');
-      } else {
+        navigate('/admindashboard');
+      } else if (role === 'ketua') {
+        navigate('/ketuadashboard');
+      } else{
         navigate('/');
       }
     }
@@ -47,9 +51,14 @@ const LoginPage = () => {
         localStorage.setItem('username', account.username);
 
         if (account.role === 'admin') {
-          navigate('/adpeserta');
-        } else {
+          navigate('/admindashboard');
+          window.location.reload();
+        } else if (account.role === 'ketua') {
+          navigate('/ketuadashboard');
+          window.location.reload();
+        } else{
           navigate('/');
+          window.location.reload();
         }
       } else {
         setError('Username atau password salah');
@@ -59,10 +68,25 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
-      <div className="w-full h-screen bg-cover bg-center flex items-center justify-center"
-        //style={{ backgroundImage: `url(${bgForm})` }}
-      >
+    <div className="relative min-h-screen flex items-center justify-center bg-white overflow-hidden">
+      {/* Background kiri */}
+      {/* Background kiri */}
+      <img
+        src={bgleft}
+        alt="Background Left"
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 h-[300px] w-auto object-contain z-0"
+      />
+
+      {/* Background kanan */}
+      <img
+        src={bgright}
+        alt="Background Right"
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 h-[300px] w-auto object-contain z-0"
+      />
+
+
+      {/* Card Form Login */}
+      <div className="relative z-10 w-full h-screen bg-cover bg-center flex items-center justify-center">
         <div className="bg-white p-8 rounded-md shadow-md w-[350px]">
           <h2 className="text-2xl font-semibold text-center mb-1">EduSkill</h2>
           <p className="text-sm text-center text-blue-600 mb-4">Login</p>
@@ -136,6 +160,7 @@ const LoginPage = () => {
       </div>
     </div>
   );
+
 };
 
 export default LoginPage;

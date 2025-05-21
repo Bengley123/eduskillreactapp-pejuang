@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaSearch, FaPlus, FaUserCircle, FaTimes, FaTrashAlt, FaEdit, FaSave, FaFileAlt, FaFileImage, FaIdCard } from 'react-icons/fa';
-import LogoBinaEssa from '../../assets/logo-bina-essa1.jpg';
+//import LogoBinaEssa from '../../assets/logo-bina-essa1.jpg';
 
 const dataPesertaAwal = [
   { 
@@ -195,12 +195,12 @@ export default function AdminPesertaPage() {
         <main className="p-6 overflow-y-auto">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold mb-6">Peserta</h1>
-            <button
+            {/* <button
               onClick={() => setShowForm(true)}
               className="bg-blue-500 text-white px-4 py-2 rounded inline-flex items-center gap-2"
             >
               <FaPlus /> Tambah
-            </button>   
+            </button>    */}
           </div>
 
           {/* Table */}

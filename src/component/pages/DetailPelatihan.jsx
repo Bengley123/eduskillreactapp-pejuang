@@ -7,10 +7,16 @@ import ImgCard from "../../assets/imgcard1.jpg";
 
 const DetailPelatihan = () => {
   const { id } = useParams();
-  const navigate = useNavigate(); // tambahkan useNavigate
+  const navigate = useNavigate();
 
   const handleDaftar = () => {
-    navigate("/daftar"); // arahkan ke halaman /daftar
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    if (isLoggedIn) {
+      navigate("/daftar");
+    } else {
+      alert("Silakan login terlebih dahulu!");
+    }
   };
 
   return (

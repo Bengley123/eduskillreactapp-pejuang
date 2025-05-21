@@ -76,7 +76,7 @@ const SidebarAdmin = ({ isOpen, toggleSidebar }) => {
           </a>
           <a href="/adnotif" className="hover:bg-gray-700 px-2 py-2 rounded flex items-center text-white">
             {isOpen ? (
-              <span className="ml-2">Kelola Notifikasi</span>
+              <span className="ml-2">Kelola Feedback</span>
             ) : (
               <span className="text-center w-full">
                 <i className="fas fa-info-circle text-lg"></i>

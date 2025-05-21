@@ -32,6 +32,10 @@ const dataTentangKamiAwal = {
     title: "BINA ESSA UTAMA",
     logoUrl: "logo-beu.png",
     description: "BINA ESSA UTAMA adalah unit bisnis yang fokus pada produksi garmen dan fashion item berkualitas ekspor."
+  },
+  "GALERI": {
+    title: "PERTEMUAN PARA PENGGIAT PELATIHAN",
+    logoUrl: "logo-beu.png",
   }
 };
 
@@ -698,6 +702,19 @@ const KelolaInformasi = () => {
                       <span className="font-medium">YAYASAN BINA ESSA</span>
                     </div>
                     {activeTentangKami === 'BINA ESSA UTAMA' ? <FaChevronDown /> : <FaChevronRight />}
+                  </button>
+                </div>
+                <div className="bg-white border rounded-lg overflow-hidden">
+                  <button 
+                    onClick={() => toggleTentangKami('GALERI')}
+                    className={`w-full p-3 text-left flex items-center justify-between transition-colors
+                              ${activeTentangKami === 'GALERI' ? 'bg-orange-100' : 'bg-gray-50 hover:bg-gray-100'}`}
+                  >
+                    <div className="flex items-center">
+                      <FaBuilding className="text-orange-500 mr-2" />
+                      <span className="font-medium">GALERI</span>
+                    </div>
+                    {activeTentangKami === 'GALERI' ? <FaChevronDown /> : <FaChevronRight />}
                   </button>
                 </div>
               </div>

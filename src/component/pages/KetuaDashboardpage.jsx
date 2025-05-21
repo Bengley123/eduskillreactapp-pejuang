@@ -35,7 +35,7 @@ const produkData = [
 ];
 
 // Komponen Dashboard utama (yang beradaptasi dengan sidebar)
-const AdminDashboardPage = ({ isSidebarOpen }) => {
+const KetuaDashboardPage = ({ isSidebarOpen }) => {
   // Render konten berdasarkan path URL
   const renderContent = () => {
     const path = window.location.pathname;
@@ -115,7 +115,7 @@ const StatCard = ({ title, value, icon }) => (
 const DashboardContent = () => {
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-6">Dashboard</h2>
+      <h2 className="text-2xl font-semibold mb-6">Dashboard Ketua</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <StatCard 
@@ -416,4 +416,4 @@ const LaporanContent = () => {
   );
 };
 
-export default AdminDashboardPage;
+export default KetuaDashboardPage;

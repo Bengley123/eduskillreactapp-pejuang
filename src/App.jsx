@@ -3,12 +3,16 @@ import { Routes, Route } from "react-router-dom";
 
 import UserLayout from "./component/Layouts/UserLayout";
 import AdminLayout from "./component/Layouts/AdminLayout";
+import KetuaLayout from "./component/Layouts/KetuaLayout";
 
 import LoginPage from "./component/pages/Loginpage";
 import RegisterPage from "./component/pages/Registerpage";
 import LandingPage from "./component/pages/Landingpage";
 import DaftarPage from "./component/pages/Daftarpage";
 import DetailPelatihan from "./component/pages/DetailPelatihan";
+
+import KetuaDashboardPage from "./component/pages/KetuaDashboardpage"
+
 import AdminPesertaPage from "./component/pages/AdminPesertapage";
 import AdminKontenPage from "./component/pages/AdminKontenpage";
 import AdminPelatihanPage from "./component/pages/AdminPelatihanpage";
@@ -29,7 +33,6 @@ function App() {
       <Route element={<UserLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/daftar" element={<DaftarPage />} />
-        {/* <Route path="/pelatihan" element={<DetailPelatihan />} /> */}
         <Route path="/tentangkami" element={<TentangKamiPage />} />
         <Route path="/pelatihan/:id" element={<DetailPelatihan />} />
         <Route path="/statusdaftar" element={<StatusPendaftaranPage />} />
@@ -47,6 +50,10 @@ function App() {
         <Route path="/adkonten" element={<AdminKontenPage />} />
         <Route path="/adpelatihan" element={<AdminPelatihanPage />} />
         <Route path="/adlaporan" element={<AdminLaporanPage />} />
+      </Route>
+
+      <Route element={<KetuaLayout />}>
+        <Route path="/ketuadashboard" element={<KetuaDashboardPage />} />
       </Route>
     </Routes>
   );
