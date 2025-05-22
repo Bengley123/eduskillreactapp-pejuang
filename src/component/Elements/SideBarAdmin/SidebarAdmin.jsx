@@ -56,7 +56,7 @@ const SidebarAdmin = ({ isOpen, toggleSidebar }) => {
               </span>
             )}
           </a>
-          <a href="#" className="hover:bg-gray-700 px-2 py-2 rounded flex items-center text-white">
+          {/* <a href="#" className="hover:bg-gray-700 px-2 py-2 rounded flex items-center text-white">
             {isOpen ? (
               <span className="ml-2">Pendaftaran</span>
             ) : (
@@ -64,7 +64,7 @@ const SidebarAdmin = ({ isOpen, toggleSidebar }) => {
                 <i className="fas fa-clipboard-list text-lg"></i>
               </span>
             )}
-          </a>
+          </a> */}
           <a href="/adkonten" className="hover:bg-gray-700 px-2 py-2 rounded flex items-center text-white">
             {isOpen ? (
               <span className="ml-2">Kelola Informasi</span>

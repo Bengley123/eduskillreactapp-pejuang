@@ -23,6 +23,12 @@ const pelatihanData = [
   { id: 3, nama: 'Manajemen Produksi', tanggal: '10 Juli 2025', instruktur: 'Denny Pratama' },
 ];
 
+const tempatkerjaData = [
+  { id: 1, nama: 'Irwan Padang', tempatkerja: 'RM Sederhana'},
+  { id: 2, nama: 'Ucup Galon', tempatkerja: 'Danone'},
+  { id: 3, nama: 'Rifki Finance', tempatkerja: 'Bank Mandiri'},
+];
+
 const pesertaData = [
   { id: 1, nama: 'Budi Belus', pelatihan: 'Penjahitan Ekspor', status: 'Ditinjau' },
   { id: 2, nama: 'David Dagu', pelatihan: 'Penjahitan Ekspor', status: 'Ditolak' },
@@ -200,6 +206,27 @@ const DashboardContent = () => {
                     <td className="px-4 py-2">{pelatihan.nama}</td>
                     <td className="px-4 py-2">{pelatihan.tanggal}</td>
                     <td className="px-4 py-2">{pelatihan.instruktur}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold mb-4">Tempat bekerja Alumni</h3>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Alumni</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tempat Bekerja</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {tempatkerjaData.map((pelatihan) => (
+                  <tr key={pelatihan.id}>
+                    <td className="px-4 py-2">{pelatihan.nama}</td>
+                    <td className="px-4 py-2">{pelatihan.tempatkerja}</td>
                   </tr>
                 ))}
               </tbody>

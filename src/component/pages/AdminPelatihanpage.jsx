@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaSearch, FaPlus, FaTimes, FaTrashAlt, FaEdit, FaSave, FaUserFriends, FaExclamationCircle } from 'react-icons/fa';
+import { FaSearch, FaPlus, FaTimes, FaTrashAlt, FaEdit, FaSave, FaUserFriends, FaExclamationCircle, FaCheck } from 'react-icons/fa';
 
 const dataPelatihanAwal = [
   { 
@@ -46,15 +46,51 @@ const dataPelatihanAwal = [
     lokasi: 'Workshop Bina Essa, Bandung',
     biaya: 'Rp. 2,200,000'
   },
+  { 
+    id: 5,
+    nama: 'Teknik Bordiran Modern', 
+    tanggalMulai: '20 Agustus 2025',
+    tanggalSelesai: '20 Oktober 2025',
+    deskripsi: 'Pelatihan teknik bordiran dengan menggunakan mesin modern',
+    instruktur: 'Pak Ahmad Ridwan',
+    kapasitas: '18 peserta',
+    lokasi: 'Workshop Bina Essa, Bandung',
+    biaya: 'Rp. 2,300,000'
+  },
+  { 
+    id: 6,
+    nama: 'Cutting Pattern Profesional', 
+    tanggalMulai: '1 September 2025',
+    tanggalSelesai: '1 November 2025',
+    deskripsi: 'Pelatihan pembuatan pola dan cutting untuk berbagai jenis pakaian',
+    instruktur: 'Ibu Dewi Sartika',
+    kapasitas: '22 peserta',
+    lokasi: 'Workshop Bina Essa, Bandung',
+    biaya: 'Rp. 2,600,000'
+  },
+  { 
+    id: 7,
+    nama: 'Fashion Merchandising', 
+    tanggalMulai: '15 September 2025',
+    tanggalSelesai: '15 November 2025',
+    deskripsi: 'Pelatihan merchandising dan marketing untuk produk fashion',
+    instruktur: 'Pak Rizki Pratama',
+    kapasitas: '20 peserta',
+    lokasi: 'Workshop Bina Essa, Bandung',
+    biaya: 'Rp. 2,700,000'
+  }
 ];
 
 // Data mockup untuk pelamar
-const dataPelamarMockup = {
+const dataPelamarMockupAwal = {
   1: [ // Pelamar untuk pelatihan ID 1
-    { id: 101, nama: 'Ahmad Rizky', email: 'ahmad.rizky@gmail.com', telepon: '08123456789', status: 'Diterima', tanggalDaftar: '5 Mei 2025' },
-    { id: 102, nama: 'Siti Amelia', email: 'siti.amelia@gmail.com', telepon: '08234567890', status: 'Ditinjau', tanggalDaftar: '6 Mei 2025' },
-    { id: 103, nama: 'Budi Setiawan', email: 'budi.setiawan@gmail.com', telepon: '08345678901', status: 'Ditolak', tanggalDaftar: '7 Mei 2025' },
-    { id: 104, nama: 'Diana Putri', email: 'diana.putri@gmail.com', telepon: '08456789012', status: 'Diterima', tanggalDaftar: '8 Mei 2025' },
+    { id: 101, nama: 'Budi Belus', email: 'budi.belus@gmail.com', telepon: '08123456789', status: 'Diterima', tanggalDaftar: '5 Mei 2025' },
+    { id: 102, nama: 'David Dagu', email: 'david.dagu@gmail.com', telepon: '08234567890', status: 'Ditinjau', tanggalDaftar: '6 Mei 2025' },
+    { id: 103, nama: 'Ujang Kijang', email: 'ujang.kijang@gmail.com', telepon: '08345678901', status: 'Ditolak', tanggalDaftar: '7 Mei 2025' },
+    { id: 104, nama: 'Deddy Botak', email: 'deddy.botak@gmail.com', telepon: '08456789012', status: 'Diterima', tanggalDaftar: '8 Mei 2025' },
+    { id: 105, nama: 'Siti Aminah', email: 'siti.aminah@gmail.com', telepon: '08567890123', status: 'Ditinjau', tanggalDaftar: '9 Mei 2025' },
+    { id: 106, nama: 'Agus Salim', email: 'agus.salim@gmail.com', telepon: '08678901234', status: 'Ditolak', tanggalDaftar: '10 Mei 2025' },
+    { id: 107, nama: 'Maya Sari', email: 'maya.sari@gmail.com', telepon: '08789012345', status: 'Diterima', tanggalDaftar: '11 Mei 2025' },
   ],
   2: [ // Pelamar untuk pelatihan ID 2
     { id: 201, nama: 'Rini Wulandari', email: 'rini.wulandari@gmail.com', telepon: '08567890123', status: 'Diterima', tanggalDaftar: '10 Mei 2025' },
@@ -65,12 +101,23 @@ const dataPelamarMockup = {
     { id: 302, nama: 'Dimas Prayoga', email: 'dimas.prayoga@gmail.com', telepon: '08890123456', status: 'Ditolak', tanggalDaftar: '13 Mei 2025' },
     { id: 303, nama: 'Nina Kartika', email: 'nina.kartika@gmail.com', telepon: '08901234567', status: 'Ditinjau', tanggalDaftar: '14 Mei 2025' },
   ],
-  4: [] // Belum ada pelamar untuk pelatihan ID 4
+  4: [], // Belum ada pelamar untuk pelatihan ID 4
+  5: [
+    { id: 501, nama: 'Lestari Dewi', email: 'lestari.dewi@gmail.com', telepon: '08123987654', status: 'Diterima', tanggalDaftar: '16 Mei 2025' },
+  ],
+  6: [
+    { id: 601, nama: 'Andi Wijaya', email: 'andi.wijaya@gmail.com', telepon: '08234876543', status: 'Ditinjau', tanggalDaftar: '18 Mei 2025' },
+    { id: 602, nama: 'Sari Indah', email: 'sari.indah@gmail.com', telepon: '08345765432', status: 'Diterima', tanggalDaftar: '19 Mei 2025' },
+  ],
+  7: []
 };
 
 const TableSection = () => {
   const [showForm, setShowForm] = useState(false);
   const [dataPelatihan, setDataPelatihan] = useState(dataPelatihanAwal);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  
   const [selectedPelatihan, setSelectedPelatihan] = useState(null);
   const [editedPelatihan, setEditedPelatihan] = useState(null);
   const [showDetail, setShowDetail] = useState(false);
@@ -80,6 +127,13 @@ const TableSection = () => {
   const [showPelamarModal, setShowPelamarModal] = useState(false);
   const [selectedPelamarList, setSelectedPelamarList] = useState([]);
   const [selectedPelatihanNama, setSelectedPelatihanNama] = useState('');
+  const [selectedPelatihanId, setSelectedPelatihanId] = useState(null);
+  const [dataPelamarMockup, setDataPelamarMockup] = useState(dataPelamarMockupAwal);
+  
+  // State untuk popup status pelamar
+  const [showStatusPopup, setShowStatusPopup] = useState(false);
+  const [selectedPelamar, setSelectedPelamar] = useState(null);
+  const [newStatus, setNewStatus] = useState('');
   
   const [form, setForm] = useState({ 
     nama: '', 
@@ -91,6 +145,13 @@ const TableSection = () => {
     lokasi: '',
     biaya: ''
   });
+
+  // Calculate pagination
+  const totalPages = Math.ceil(dataPelatihan.length / itemsPerPage);
+  const paginatedData = dataPelatihan.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleViewDetail = (pelatihan) => {
     setSelectedPelatihan({...pelatihan});
@@ -104,14 +165,51 @@ const TableSection = () => {
     const pelamarList = dataPelamarMockup[pelatihan.id] || [];
     setSelectedPelamarList(pelamarList);
     setSelectedPelatihanNama(pelatihan.nama);
+    setSelectedPelatihanId(pelatihan.id);
     setShowPelamarModal(true);
+  };
+
+  // Fungsi untuk membuka popup status pelamar
+  const handleChangeStatus = (pelamar) => {
+    setSelectedPelamar(pelamar);
+    setNewStatus(pelamar.status); // Set status saat ini sebagai default
+    setShowStatusPopup(true);
+  };
+
+  // Fungsi untuk menyimpan perubahan status
+  const handleSaveStatus = () => {
+    if (selectedPelamar && selectedPelatihanId) {
+      const updatedMockup = { ...dataPelamarMockup };
+      const pelamarIndex = updatedMockup[selectedPelatihanId].findIndex(p => p.id === selectedPelamar.id);
+      
+      if (pelamarIndex !== -1) {
+        updatedMockup[selectedPelatihanId][pelamarIndex].status = newStatus;
+        setDataPelamarMockup(updatedMockup);
+        
+        // Update juga selectedPelamarList untuk refresh tampilan
+        const updatedPelamarList = updatedMockup[selectedPelatihanId];
+        setSelectedPelamarList(updatedPelamarList);
+      }
+    }
+    
+    setShowStatusPopup(false);
+    setSelectedPelamar(null);
+    setNewStatus('');
   };
 
   const handleDelete = (index) => {
     if (window.confirm('Apakah Anda yakin ingin menghapus pelatihan ini?')) {
+      const actualIndex = (currentPage - 1) * itemsPerPage + index;
       const newData = [...dataPelatihan];
-      newData.splice(index, 1);
+      newData.splice(actualIndex, 1);
       setDataPelatihan(newData);
+      
+      // Adjust current page if necessary
+      const newTotalPages = Math.ceil(newData.length / itemsPerPage);
+      if (currentPage > newTotalPages && newTotalPages > 0) {
+        setCurrentPage(newTotalPages);
+      }
+      
       setShowDetail(false);
     }
   };
@@ -140,24 +238,39 @@ const TableSection = () => {
     setEditedPelatihan({...editedPelatihan, [field]: value});
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newPelatihan = {
-      ...form,
-      id: Math.max(...dataPelatihan.map(p => p.id), 0) + 1 // Generate ID baru
-    };
-    setDataPelatihan([...dataPelatihan, newPelatihan]);
-    setForm({ 
-      nama: '', 
-      tanggalMulai: '', 
-      tanggalSelesai: '',
-      deskripsi: '',
-      instruktur: '',
-      kapasitas: '',
-      lokasi: '',
-      biaya: ''
-    });
-    setShowForm(false);
+  const handleSubmit = () => {
+    if (form.nama && form.tanggalMulai && form.tanggalSelesai && form.deskripsi && form.instruktur && form.kapasitas && form.lokasi && form.biaya) {
+      const newPelatihan = {
+        ...form,
+        id: Math.max(...dataPelatihan.map(p => p.id), 0) + 1 // Generate ID baru
+      };
+      setDataPelatihan([...dataPelatihan, newPelatihan]);
+      setForm({ 
+        nama: '', 
+        tanggalMulai: '', 
+        tanggalSelesai: '',
+        deskripsi: '',
+        instruktur: '',
+        kapasitas: '',
+        lokasi: '',
+        biaya: ''
+      });
+      setShowForm(false);
+    } else {
+      alert('Mohon lengkapi semua field yang wajib diisi');
+    }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage(prev => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(prev + 1, totalPages));
   };
 
   // Helper function untuk status badge pelamar
@@ -186,20 +299,25 @@ const TableSection = () => {
             <FaPlus size={12} /> Tambah
           </button>
         </div>
+        
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm text-left">
             <thead className="bg-gray-100 text-gray-700">
               <tr>
+                <th className="px-4 py-2">No</th>
                 <th className="px-4 py-2">Nama Pelatihan</th>
                 <th className="px-4 py-2">Tanggal Mulai</th>
+                <th className="px-4 py-2">Instruktur</th>
                 <th className="px-4 py-2 text-center">Action</th>
               </tr>
             </thead>
             <tbody>
-              {dataPelatihan.map((pelatihan, idx) => (
-                <tr key={idx} className="border-t">
+              {paginatedData.map((pelatihan, idx) => (
+                <tr key={idx} className={idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                  <td className="px-4 py-2">{(currentPage - 1) * itemsPerPage + idx + 1}</td>
                   <td className="px-4 py-2">{pelatihan.nama}</td>
                   <td className="px-4 py-2">{pelatihan.tanggalMulai}</td>
+                  <td className="px-4 py-2">{pelatihan.instruktur}</td>
                   <td className="px-4 py-2 text-center">
                     <div className="flex justify-center gap-2">
                       <button 
@@ -224,6 +342,44 @@ const TableSection = () => {
           </table>
         </div>
 
+        {/* Pagination */}
+        <div className="flex justify-between items-center mt-4">
+          <div className="text-sm text-gray-600">
+            Menampilkan {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, dataPelatihan.length)} dari {dataPelatihan.length} data
+          </div>
+          <div className="flex justify-center space-x-2">
+            <button
+              onClick={handlePrevPage}
+              className="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                onClick={() => handlePageChange(i + 1)}
+                className={`px-3 py-2 border rounded ${
+                  currentPage === i + 1 
+                    ? 'bg-blue-500 text-white' 
+                    : 'bg-gray-200 hover:bg-gray-300'
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={handleNextPage}
+              className="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+
         {/* Form Tambah Pelatihan */}
         {showForm && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -239,7 +395,7 @@ const TableSection = () => {
               </div>
               
               <div className="max-h-80 overflow-y-auto pr-1">
-                <form onSubmit={handleSubmit} className="space-y-2">
+                <div className="space-y-2">
                   <div>
                     <label className="block text-xs text-gray-500">Nama Pelatihan</label>
                     <input 
@@ -324,7 +480,7 @@ const TableSection = () => {
                       placeholder="Contoh: Rp. 2,500,000"
                     />
                   </div>
-                </form>
+                </div>
               </div>
               
               <div className="flex justify-end gap-2 mt-3">
@@ -487,7 +643,7 @@ const TableSection = () => {
                   <>
                     <button
                       onClick={() => {
-                        const index = dataPelatihan.findIndex(p => p.id === selectedPelatihan.id);
+                        const index = paginatedData.findIndex(p => p.id === selectedPelatihan.id);
                         if (index !== -1) handleDelete(index);
                       }}
                       className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded inline-flex items-center gap-1 text-xs"
@@ -515,7 +671,7 @@ const TableSection = () => {
 
         {/* Modal Daftar Pelamar */}
         {showPelamarModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4" style={{zIndex: 9000}}>
             <div className="bg-white rounded-lg shadow-lg p-3 w-full max-w-4xl mx-auto">
               <div className="flex justify-between items-center mb-2">
                 <h3 className="text-lg font-semibold">Daftar Pelamar - {selectedPelatihanNama}</h3>
@@ -551,7 +707,11 @@ const TableSection = () => {
                             {getStatusBadge(pelamar.status)}
                           </td>
                           <td className="px-4 py-2 whitespace-nowrap text-center">
-                            <button className="text-blue-500 hover:text-blue-700 transition-colors">
+                            <button 
+                              onClick={() => handleChangeStatus(pelamar)}
+                              className="text-blue-500 hover:text-blue-700 transition-colors"
+                              title="Ubah Status"
+                            >
                               <FaEdit size={16} />
                             </button>
                           </td>
@@ -573,6 +733,74 @@ const TableSection = () => {
                   className="bg-gray-300 hover:bg-gray-400 px-3 py-1.5 rounded text-sm"
                 >
                   Tutup
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Popup Status Pelamar */}
+        {showStatusPopup && selectedPelamar && (
+          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4" style={{zIndex: 9999}}>
+            <div className="bg-white rounded-lg shadow-lg p-4 w-full max-w-sm mx-auto">
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-lg font-semibold">Ubah Status Pelamar</h3>
+                <button 
+                  onClick={() => setShowStatusPopup(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <FaTimes size={16} />
+                </button>
+              </div>
+              
+              <div className="space-y-3">
+                <div>
+                  <p className="text-sm text-gray-600 mb-1">Nama Pelamar:</p>
+                  <p className="font-medium text-base">{selectedPelamar.nama}</p>
+                </div>
+                
+                <div>
+                  <p className="text-sm text-gray-600 mb-1">Status Saat Ini:</p>
+                  <div className="mb-2">
+                    {getStatusBadge(selectedPelamar.status)}
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm text-gray-600 mb-2">Pilih Status Baru:</label>
+                  <select
+                    value={newStatus}
+                    onChange={(e) => setNewStatus(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="Ditinjau">Ditinjau</option>
+                    <option value="Diterima">Diterima</option>
+                    <option value="Ditolak">Ditolak</option>
+                  </select>
+                </div>
+                
+                <div className="text-xs text-gray-500 bg-gray-50 p-2 rounded">
+                  <strong>Keterangan:</strong>
+                  <ul className="mt-1 space-y-1">
+                    <li>• <span className="font-medium">Ditinjau:</span> Status default, sedang dalam proses review</li>
+                    <li>• <span className="font-medium">Diterima:</span> Pelamar diterima untuk mengikuti pelatihan</li>
+                    <li>• <span className="font-medium">Ditolak:</span> Pelamar tidak memenuhi syarat pelatihan</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="flex justify-end gap-2 mt-4">
+                <button
+                  onClick={() => setShowStatusPopup(false)}
+                  className="px-3 py-2 bg-gray-300 hover:bg-gray-400 rounded text-sm transition-colors"
+                >
+                  Batal
+                </button>
+                <button
+                  onClick={handleSaveStatus}
+                  className="px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm inline-flex items-center gap-1 transition-colors"
+                >
+                  <FaCheck size={12} /> Simpan
                 </button>
               </div>
             </div>

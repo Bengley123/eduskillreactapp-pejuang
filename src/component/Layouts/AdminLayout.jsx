@@ -62,7 +62,7 @@ export default function AdminLayout() {
                   Profile Admin
                 </button>
                 <button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-800">
-                  Logout
+                  Keluar
                 </button>
               </div>
             )}

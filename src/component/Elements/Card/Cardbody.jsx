@@ -21,9 +21,12 @@ const CardBody = ({ title, description, image, fullDescription }) => {
     <div className="p-4">
       <Heading>{title}</Heading>
       <Paragraph>{description}</Paragraph>
-      <Button onClick={handleClick} className="w-full h-10">
-        Ikut Pelatihan
-      </Button>
+      <div className="w-full flex justify-center mt-4">
+        <Button onClick={handleClick} className="w-full max-w-xs h-10">
+          Ikut Pelatihan
+        </Button>
+      </div>
+
     </div>
   );
 };

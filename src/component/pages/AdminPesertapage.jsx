@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FaSearch, FaPlus, FaUserCircle, FaTimes, FaTrashAlt, FaEdit, FaSave, FaFileAlt, FaFileImage, FaIdCard } from 'react-icons/fa';
-//import LogoBinaEssa from '../../assets/logo-bina-essa1.jpg';
 
 const dataPesertaAwal = [
   { 
@@ -55,6 +54,45 @@ const dataPesertaAwal = [
     pasPhoto: 'photo_deddy_botak.jpg',
     ijazah: 'ijazah_deddy_botak.pdf'
   },
+  { 
+    nama: 'Siti Aminah', 
+    pelatihan: 'Penjahitan profesional siap industri Ekspor', 
+    status: 'Ditinjau',
+    email: 'siti.aminah@gmail.com',
+    telepon: '081456789012',
+    alamat: 'Jl. Ahmad Yani No. 67, Bandung',
+    tanggalDaftar: '20 Mei 2025',
+    ktp: 'ktp_siti_aminah.pdf',
+    kk: 'kk_siti_aminah.pdf',
+    pasPhoto: 'photo_siti_aminah.jpg',
+    ijazah: 'ijazah_siti_aminah.pdf'
+  },
+  { 
+    nama: 'Agus Salim', 
+    pelatihan: 'Penjahitan profesional siap industri Ekspor', 
+    status: 'Ditolak',
+    email: 'agus.salim@gmail.com',
+    telepon: '081567890123',
+    alamat: 'Jl. Gatot Subroto No. 89, Bandung',
+    tanggalDaftar: '18 Mei 2025',
+    ktp: 'ktp_agus_salim.pdf',
+    kk: 'kk_agus_salim.pdf',
+    pasPhoto: 'photo_agus_salim.jpg',
+    ijazah: 'ijazah_agus_salim.pdf'
+  },
+  { 
+    nama: 'Maya Sari', 
+    pelatihan: 'Penjahitan profesional siap industri Ekspor', 
+    status: 'Diterima',
+    email: 'maya.sari@gmail.com',
+    telepon: '081678901234',
+    alamat: 'Jl. Cihampelas No. 45, Bandung',
+    tanggalDaftar: '12 Mei 2025',
+    ktp: 'ktp_maya_sari.pdf',
+    kk: 'kk_maya_sari.pdf',
+    pasPhoto: 'photo_maya_sari.jpg',
+    ijazah: 'ijazah_maya_sari.pdf'
+  }
 ];
 
 const getStatusColor = (status) => {
@@ -100,6 +138,9 @@ const DocumentLink = ({ filename }) => {
 export default function AdminPesertaPage() {
   const [showForm, setShowForm] = useState(false);
   const [dataPeserta, setDataPeserta] = useState(dataPesertaAwal);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  
   const [form, setForm] = useState({ 
     nama: '', 
     pelatihan: '', 
@@ -118,23 +159,33 @@ export default function AdminPesertaPage() {
   const [showDetail, setShowDetail] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setDataPeserta([...dataPeserta, form]);
-    setForm({ 
-      nama: '', 
-      pelatihan: '', 
-      status: 'Ditinjau',
-      email: '',
-      telepon: '',
-      alamat: '',
-      tanggalDaftar: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
-      ktp: '',
-      kk: '',
-      pasPhoto: '',
-      ijazah: ''
-    });
-    setShowForm(false);
+  // Calculate pagination
+  const totalPages = Math.ceil(dataPeserta.length / itemsPerPage);
+  const paginatedData = dataPeserta.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleSubmit = () => {
+    if (form.nama && form.pelatihan && form.email && form.telepon && form.alamat) {
+      setDataPeserta([...dataPeserta, form]);
+      setForm({ 
+        nama: '', 
+        pelatihan: '', 
+        status: 'Ditinjau',
+        email: '',
+        telepon: '',
+        alamat: '',
+        tanggalDaftar: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+        ktp: '',
+        kk: '',
+        pasPhoto: '',
+        ijazah: ''
+      });
+      setShowForm(false);
+    } else {
+      alert('Mohon lengkapi semua field yang wajib diisi');
+    }
   };
 
   const handleViewDetail = (peserta) => {
@@ -146,9 +197,17 @@ export default function AdminPesertaPage() {
 
   const handleDelete = (index) => {
     if (window.confirm('Apakah Anda yakin ingin menghapus peserta ini?')) {
+      const actualIndex = (currentPage - 1) * itemsPerPage + index;
       const newData = [...dataPeserta];
-      newData.splice(index, 1);
+      newData.splice(actualIndex, 1);
       setDataPeserta(newData);
+      
+      // Adjust current page if necessary
+      const newTotalPages = Math.ceil(newData.length / itemsPerPage);
+      if (currentPage > newTotalPages && newTotalPages > 0) {
+        setCurrentPage(newTotalPages);
+      }
+      
       setShowDetail(false);
     }
   };
@@ -187,6 +246,18 @@ export default function AdminPesertaPage() {
     }
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage(prev => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(prev + 1, totalPages));
+  };
+
   return (
     <div className="flex min-h-screen">
       {/* Main content */}
@@ -197,10 +268,10 @@ export default function AdminPesertaPage() {
             <h1 className="text-2xl font-bold mb-6">Peserta</h1>
             {/* <button
               onClick={() => setShowForm(true)}
-              className="bg-blue-500 text-white px-4 py-2 rounded inline-flex items-center gap-2"
+              className="bg-blue-500 text-white px-4 py-2 rounded inline-flex items-center gap-2 hover:bg-blue-600"
             >
               <FaPlus /> Tambah
-            </button>    */}
+            </button> */}
           </div>
 
           {/* Table */}
@@ -208,9 +279,10 @@ export default function AdminPesertaPage() {
             <table className="min-w-full bg-white border border-gray-200">
               <thead className="bg-gray-100">
                 <tr>
+                  <th className="text-left p-2">No</th>
                   <th className="text-left p-2">Nama</th>
                   <th className="text-left p-2">Pelatihan</th>
-                  <th className="text-left p-2">Status</th>
+                  {/* <th className="text-left p-2">Status</th> */}
                   <th className="text-left p-2">KTP</th>
                   <th className="text-left p-2">KK</th>
                   <th className="text-left p-2">Pas Photo</th>
@@ -219,11 +291,12 @@ export default function AdminPesertaPage() {
                 </tr>
               </thead>
               <tbody>
-                {dataPeserta.map((peserta, index) => (
+                {paginatedData.map((peserta, index) => (
                   <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                    <td className="p-2">{(currentPage - 1) * itemsPerPage + index + 1}</td>
                     <td className="p-2">{peserta.nama}</td>
                     <td className="p-2">{peserta.pelatihan}</td>
-                    <td className={`p-2 ${getStatusColor(peserta.status)}`}>{peserta.status}</td>
+                    {/* <td className={`p-2 ${getStatusColor(peserta.status)}`}>{peserta.status}</td> */}
                     <td className="p-2">
                       <DocumentLink filename={peserta.ktp} />
                     </td>
@@ -250,11 +323,49 @@ export default function AdminPesertaPage() {
             </table>
           </div>
 
+          {/* Pagination - Moved outside table */}
+          <div className="flex justify-between items-center mt-4">
+            <div className="text-sm text-gray-600">
+              Menampilkan {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, dataPeserta.length)} dari {dataPeserta.length} data
+            </div>
+            <div className="flex justify-center space-x-2">
+              <button
+                onClick={handlePrevPage}
+                className="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={currentPage === 1}
+              >
+                Prev
+              </button>
+
+              {[...Array(totalPages)].map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => handlePageChange(i + 1)}
+                  className={`px-3 py-2 border rounded ${
+                    currentPage === i + 1 
+                      ? 'bg-blue-500 text-white' 
+                      : 'bg-gray-200 hover:bg-gray-300'
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+
+              <button
+                onClick={handleNextPage}
+                className="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+
           {/* Form Tambah Data */}
-          {showForm && (
+          {/* {showForm && (
             <div className="mt-6 bg-white border p-4 rounded shadow-md w-full md:w-1/2">
               <h3 className="text-lg font-semibold mb-4">Tambah Data Peserta</h3>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-4">
                 <div>
                   <label className="block text-sm">Nama</label>
                   <input type="text" value={form.nama} onChange={(e) => setForm({ ...form, nama: e.target.value })} className="w-full p-2 border rounded" required />
@@ -300,12 +411,12 @@ export default function AdminPesertaPage() {
                   <input type="file" onChange={(e) => setForm({ ...form, ijazah: e.target.files[0]?.name || '' })} className="w-full p-2 border rounded" />
                 </div>
                 <div className="flex justify-end gap-2">
-                  <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 bg-gray-300 rounded">Batal</button>
-                  <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">Simpan</button>
+                  <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Batal</button>
+                  <button type="button" onClick={handleSubmit} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Simpan</button>
                 </div>
-              </form>
+              </div>
             </div>
-          )}
+          )} */}
 
           {/* Detail Modal */}
           {showDetail && selectedPeserta && (
@@ -391,7 +502,7 @@ export default function AdminPesertaPage() {
                     <p className="text-xs text-gray-500">Tanggal Daftar</p>
                     <p className="font-medium text-sm">{selectedPeserta.tanggalDaftar}</p>
                   </div>
-                  <div>
+                  {/* <div>
                     <p className="text-xs text-gray-500">Status</p>
                     {isEditing ? (
                       <select
@@ -408,7 +519,7 @@ export default function AdminPesertaPage() {
                         {selectedPeserta.status}
                       </p>
                     )}
-                  </div>
+                  </div> */}
                   
                   {/* Dokumen */}
                   <div>
@@ -493,7 +604,7 @@ export default function AdminPesertaPage() {
                     <>
                       <button
                         onClick={() => {
-                          const index = dataPeserta.findIndex(p => p.nama === selectedPeserta.nama);
+                          const index = paginatedData.findIndex(p => p.nama === selectedPeserta.nama);
                           if (index !== -1) handleDelete(index);
                         }}
                         className="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded inline-flex items-center gap-1 text-sm"
