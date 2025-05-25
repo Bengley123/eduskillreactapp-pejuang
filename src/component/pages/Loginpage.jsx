@@ -38,6 +38,7 @@ const LoginPage = () => {
 
       if (data.access_token) {
         localStorage.setItem("jwt", data.access_token);
+        localStorage.setItem("user", JSON.stringify(data.user));
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${data.access_token}`;

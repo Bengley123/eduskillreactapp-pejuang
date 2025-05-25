@@ -1,12 +1,12 @@
 import React from "react";
 import CardPelatihan from "../Fragments/CardPelatihan";
 import CarouselComponent from "../Elements/Slideimg/Carouselcomponent";
-
+import CardBerita from "../Fragments/CardBerita";
+import TestimoniCarousel from "../Fragments/TestimoniCarousel";
 
 const LandingPage = () => {
   return (
     <div className="bg-white">
-
       {/* Safe zone wrapper */}
       <div className="max-w-5xl mx-auto px-3 sm:px-4 md:px-6">
 
@@ -15,10 +15,9 @@ const LandingPage = () => {
           <CarouselComponent />
         </div>
 
-        {/* Card Pelatihan dibungkus card */}
+        {/* Pelatihan */}
         <section className="py-4">
           <div className="bg-gray-100 rounded-xl shadow-md p-6">
-            {/* <h2 className="text-2xl font-bold text-center mb-6">Pelatihan Populer</h2> */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {[...Array(6)].map((_, index) => (
                 <CardPelatihan
@@ -37,8 +36,28 @@ const LandingPage = () => {
           <CarouselComponent />
         </div>
 
-        {/* Footer */}
-        {/* <FooterComponent /> */}
+        {/* === SECTION: BERITA === */}
+        <section className="py-8">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Berita Terbaru</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {[...Array(3)].map((_, i) => (
+              <CardBerita
+                key={i}
+                image={`https://via.placeholder.com/300x180?text=Berita+${i + 1}`}
+                title={`Berita ${i + 1}`}
+                date="Mei 2025"
+                summary="Ringkasan berita atau update singkat terkait kegiatan atau info terbaru."
+                link={`/berita/${i + 1}`} // Misalnya route berita detail
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* === SECTION: TESTIMONI === */}
+        <section className="py-8">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Apa Kata Peserta?</h2>
+          <TestimoniCarousel />
+        </section>
       </div>
     </div>
   );

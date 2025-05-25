@@ -30,6 +30,10 @@ const NavMenu = ({ isLoggedIn }) => {
 
   return (
     <>
+      {/* Link Navigasi */}
+      <NavLink href="/">Home</NavLink>
+      <NavLink href="/tentangkami">Galeri</NavLink>
+
       {/* Dropdown Tentang Kami */}
       <div className="relative" ref={dropdownRef}>
         <button
@@ -46,20 +50,14 @@ const NavMenu = ({ isLoggedIn }) => {
               <a href="/tentangkami" className="block px-6 py-3 hover:bg-blue-50 border-b">LKP Bina ESSA</a>
               <a href="/tentangkami" className="block px-6 py-3 hover:bg-blue-50 border-b">LPK Bina ESSA</a>
               <a href="/tentangkami" className="block px-6 py-3 hover:bg-blue-50 border-b">Yayasan Bina ESSA</a>
-              <a href="/tentangkami" className="block px-6 py-3 hover:bg-blue-50">Galeri</a>
+              {/* <a href="/tentangkami" className="block px-6 py-3 hover:bg-blue-50">Galeri</a> */}
             </div>
           </div>
         )}
       </div>
 
-      {/* Link Navigasi */}
-      <NavLink href="/">Home</NavLink>
-
       {isLoggedIn && (
         <>
-          {/* <NavLink href="/feedback">Feedback</NavLink>
-          <NavLink href="/statusdaftar">Pendaftaran</NavLink> */}
-
           {/* 🔔 Notifikasi di sebelah Pendaftaran */}
           <div className="relative" ref={notifRef}>
             <button

@@ -294,10 +294,11 @@ const TableSection = () => {
           <h1 className="text-2xl font-bold">Kelola Pelatihan</h1>
           <button 
             onClick={() => setShowForm(true)}
-            className="px-4 py-1 text-sm border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded transition-colors duration-200 flex items-center gap-1"
+            className="px-4 py-1 text-sm bg-blue-500 text-white hover:bg-blue-600 hover:shadow-lg rounded transition-colors duration-200 flex items-center gap-1"
           >
             <FaPlus size={12} /> Tambah
           </button>
+
         </div>
         
         <div className="overflow-x-auto">

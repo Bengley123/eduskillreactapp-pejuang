@@ -2,7 +2,7 @@ import React from "react";
 import Label from "../Input/Label";
 import InputText from "../Input/Input";
 
-const InputWithLabel = ({ label, type, placeholder, value, onChange, icon }) => {
+const InputWithLabel = ({ label, type, placeholder, value, onChange, name, icon }) => {
   return (
     <div>
       <Label>{label}</Label>
@@ -11,7 +11,8 @@ const InputWithLabel = ({ label, type, placeholder, value, onChange, icon }) => 
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        icon={icon}
+        name={name}
+        icon={icon} // ✅ pastikan ini lowercase
       />
     </div>
   );
