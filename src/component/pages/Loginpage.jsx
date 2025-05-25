@@ -34,7 +34,7 @@ const LoginPage = () => {
         password,
       });
 
-      const data = response.data;
+      const data = response.data; // `data` is the entire object from Laravel
 
       if (data.access_token) {
         localStorage.setItem("jwt", data.access_token);
@@ -43,7 +43,11 @@ const LoginPage = () => {
         ] = `Bearer ${data.access_token}`;
       }
 
-      localStorage.setItem("userRole", data.role);
+      // --- CORRECTION ---
+      // Get the role from the correct nested path
+      const userRole = data.user.peran;
+
+      localStorage.setItem("userRole", userRole); // Save the correct role
 
       if (data.user) {
         localStorage.setItem("user", JSON.stringify(data.user));
@@ -51,19 +55,22 @@ const LoginPage = () => {
 
       localStorage.setItem("isLoggedIn", "true");
 
-      if (data.role === "admin" || data.role === "ketua") {
+      // --- CORRECTION ---
+      // Check against the correct userRole variable
+      if (userRole === "admin" || userRole === "ketua") {
         navigate("/admindashboard");
-        window.location.reload();
-      } else if (data.role === "peserta") {
+        // window.location.reload(); // See bonus tip below
+      } else if (userRole === "peserta") {
         navigate("/");
-        window.location.reload();
+        // window.location.reload(); // See bonus tip below
       } else {
-        setError("Unauthorized role");
+        // This block should now be very hard to reach
+        setError("Role not recognized.");
       }
     } catch (err) {
       setError(
         "Login gagal: " +
-          (err.response?.data?.error || "Cek kembali username dan password")
+          (err.response?.data?.message || "Cek kembali username dan password")
       );
     }
 
