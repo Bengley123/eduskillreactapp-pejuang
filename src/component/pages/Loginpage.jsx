@@ -59,10 +59,10 @@ const LoginPage = () => {
       // Check against the correct userRole variable
       if (userRole === "admin" || userRole === "ketua") {
         navigate("/admindashboard");
-        // window.location.reload(); // See bonus tip below
+        window.location.reload();
       } else if (userRole === "peserta") {
         navigate("/");
-        // window.location.reload(); // See bonus tip below
+        window.location.reload();
       } else {
         // This block should now be very hard to reach
         setError("Role not recognized.");
