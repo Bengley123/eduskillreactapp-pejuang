@@ -7,7 +7,8 @@ import {
   FaUsers, 
   FaChalkboardTeacher, 
   FaInfoCircle, 
-  FaChartBar 
+  FaChartBar,
+  FaBell 
 } from 'react-icons/fa';
 
 const Sidebar = ({ isOpen, logoSrc, companyName }) => {
@@ -15,8 +16,9 @@ const Sidebar = ({ isOpen, logoSrc, companyName }) => {
     { href: '/admindashboard', icon: FaHome, label: 'Dashboard Admin' },
     { href: '/adpeserta', icon: FaUsers, label: 'Peserta' },
     { href: '/adpelatihan', icon: FaChalkboardTeacher, label: 'Pelatihan' },
+    { href: '/adnotif', icon: FaBell, label: 'Kelola Notifikasi' },
     { href: '/adkonten', icon: FaInfoCircle, label: 'Kelola Informasi' },
-    { href: '/adnotif', icon: FaInfoCircle, label: 'Kelola Feedback' },
+    { href: '/adfeedback', icon: FaInfoCircle, label: 'Kelola Feedback' },
     { href: '/adlaporan', icon: FaChartBar, label: 'Unggah Laporan' }
   ];
 

@@ -41,14 +41,14 @@ const EditProfileForm = () => {
           icon={FaUser}
         />
 
-        <InputWithLabel
+        {/* <InputWithLabel
           label="Tanggal Lahir"
           type="date"
           name="tanggalLahir"
           value={formData.tanggalLahir}
           onChange={handleChange}
           icon={FaCalendarAlt}
-        />
+        /> */}
 
         <InputWithLabel
           label="Email"
@@ -68,7 +68,7 @@ const EditProfileForm = () => {
           icon={FaPhone}
         />
 
-        {/* Upload Foto */}
+        {/* Upload Foto
         <div>
           <label htmlFor="foto" className="block text-sm font-medium mb-2">
             Upload Foto
@@ -80,7 +80,7 @@ const EditProfileForm = () => {
             onChange={handleChange}
             className="w-full border border-gray-300 rounded-md p-2 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
           />
-        </div>
+        </div> */}
 
         <div className="flex justify-between mt-8">
           <Button variant="secondary" onClick={() => navigate("/profil")}>

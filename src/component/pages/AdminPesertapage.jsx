@@ -6,13 +6,12 @@ import DocumentLink from '../Moleculs/AdminSource/DocumentLink';
 import Icon from '../Elements/AdminSource/Icon';
 import { FaSearch } from 'react-icons/fa';
 
-// Mock data peserta
+// Mock data peserta (data asli)
 const dataPesertaAwal = [
   { 
     id: 1,
     nama: 'Budi Belus', 
     pelatihan: 'Penjahitan profesional siap industri Ekspor', 
-    status: 'Diterima',
     email: 'budi.belus@gmail.com',
     telepon: '081234567890',
     alamat: 'Jl. Merdeka No. 123, Bandung',
@@ -26,7 +25,6 @@ const dataPesertaAwal = [
     id: 2,
     nama: 'David Dagu', 
     pelatihan: 'Penjahitan profesional siap industri Ekspor', 
-    status: 'Diterima',
     email: 'david.dagu@gmail.com',
     telepon: '081298765432',
     alamat: 'Jl. Pahlawan No. 45, Bandung',
@@ -40,7 +38,6 @@ const dataPesertaAwal = [
     id: 3,
     nama: 'Ujang Kijang', 
     pelatihan: 'Penjahitan profesional siap industri Ekspor', 
-    status: 'Diterima',
     email: 'ujang.kijang@gmail.com',
     telepon: '081387654321',
     alamat: 'Jl. Diponegoro No. 78, Bandung',
@@ -54,7 +51,6 @@ const dataPesertaAwal = [
     id: 4,
     nama: 'Deddy Botak', 
     pelatihan: 'Penjahitan profesional siap industri Ekspor', 
-    status: 'Diterima',
     email: 'deddy.botak@gmail.com',
     telepon: '081345678901',
     alamat: 'Jl. Sudirman No. 90, Bandung',
@@ -68,7 +64,6 @@ const dataPesertaAwal = [
     id: 5,
     nama: 'Siti Aminah', 
     pelatihan: 'Penjahitan profesional siap industri Ekspor', 
-    status: 'Ditinjau',
     email: 'siti.aminah@gmail.com',
     telepon: '081456789012',
     alamat: 'Jl. Ahmad Yani No. 67, Bandung',
@@ -82,7 +77,6 @@ const dataPesertaAwal = [
     id: 6,
     nama: 'Agus Salim', 
     pelatihan: 'Penjahitan profesional siap industri Ekspor', 
-    status: 'Ditolak',
     email: 'agus.salim@gmail.com',
     telepon: '081567890123',
     alamat: 'Jl. Gatot Subroto No. 89, Bandung',
@@ -96,7 +90,6 @@ const dataPesertaAwal = [
     id: 7,
     nama: 'Maya Sari', 
     pelatihan: 'Penjahitan profesional siap industri Ekspor', 
-    status: 'Diterima',
     email: 'maya.sari@gmail.com',
     telepon: '081678901234',
     alamat: 'Jl. Cihampelas No. 45, Bandung',
@@ -116,9 +109,23 @@ const PesertaPage = () => {
   const [showDetail, setShowDetail] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   
+  // Search and filter states (filter berdasarkan pelatihan)
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterPelatihan, setFilterPelatihan] = useState('');
+  
   const itemsPerPage = 5;
 
-  // Table columns configuration
+  // Filter data peserta berdasarkan search dan filter pelatihan
+  const filteredData = dataPeserta.filter(peserta => {
+    const matchesSearch = peserta.nama.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesPelatihan = filterPelatihan ? peserta.pelatihan === filterPelatihan : true;
+    return matchesSearch && matchesPelatihan;
+  });
+
+  // Get unique pelatihan untuk dropdown filter
+  const uniquePelatihan = [...new Set(dataPeserta.map(peserta => peserta.pelatihan))];
+
+  // Table columns configuration (TANPA kolom status dan file dokumen)
   const columns = [
     { 
       key: 'index', 
@@ -127,46 +134,21 @@ const PesertaPage = () => {
     },
     { key: 'nama', header: 'Nama' },
     { key: 'pelatihan', header: 'Pelatihan' },
-    { 
-      key: 'ktp', 
-      header: 'KTP',
-      render: (filename) => <DocumentLink filename={filename} />
-    },
-    { 
-      key: 'kk', 
-      header: 'KK',
-      render: (filename) => <DocumentLink filename={filename} />
-    },
-    { 
-      key: 'pasPhoto', 
-      header: 'Pas Photo',
-      render: (filename) => <DocumentLink filename={filename} />
-    },
-    { 
-      key: 'ijazah', 
-      header: 'Ijazah',
-      render: (filename) => <DocumentLink filename={filename} />
-    }
+    { key: 'tanggalDaftar', header: 'Tanggal Daftar' }
   ];
 
-  // Modal fields configuration
+  // Modal fields configuration TANPA STATUS SAMA SEKALI
   const modalFields = [
     { key: 'nama', label: 'Nama Lengkap', type: 'text' },
     { key: 'email', label: 'Email', type: 'email' },
     { key: 'telepon', label: 'Telepon', type: 'text' },
     { key: 'alamat', label: 'Alamat', type: 'textarea' },
     { key: 'pelatihan', label: 'Pelatihan', type: 'text' },
-    { key: 'tanggalDaftar', label: 'Tanggal Daftar', type: 'text', readonly: true },
-    { 
-      key: 'status', 
-      label: 'Status', 
-      type: 'select',
-      options: [
-        { value: 'Ditinjau', label: 'Ditinjau' },
-        { value: 'Diterima', label: 'Diterima' },
-        { value: 'Ditolak', label: 'Ditolak' }
-      ]
-    },
+    { key: 'tanggalDaftar', label: 'Tanggal Daftar', type: 'text', readonly: true }
+  ];
+
+  // Document fields untuk modal (file dokumen)
+  const documentFields = [
     { key: 'ktp', label: 'KTP', type: 'file', accept: '.pdf' },
     { key: 'kk', label: 'KK', type: 'file', accept: '.pdf' },
     { key: 'pasPhoto', label: 'Pas Photo', type: 'file', accept: 'image/*' },
@@ -175,8 +157,10 @@ const PesertaPage = () => {
 
   // Event handlers
   const handleViewDetail = (peserta) => {
-    setSelectedPeserta(peserta);
-    setEditedPeserta({...peserta});
+    // Hapus field status sebelum set ke modal
+    const { status, ...pesertaWithoutStatus } = peserta;
+    setSelectedPeserta(pesertaWithoutStatus);
+    setEditedPeserta({...pesertaWithoutStatus});
     setShowDetail(true);
     setIsEditing(false);
   };
@@ -243,11 +227,41 @@ const PesertaPage = () => {
       <Typography variant="h2" className="mb-6">
         Peserta
       </Typography>
-      
+
+      {/* Filter kiri dan Search bar kanan - Filter berdasarkan Pelatihan */}
+      <div className="mb-4 flex flex-wrap gap-4 items-center justify-end">
+        {/* Dropdown Pelatihan */}
+        <select
+          value={filterPelatihan}
+          onChange={(e) => {
+            setFilterPelatihan(e.target.value);
+            setCurrentPage(1); // reset ke halaman 1 saat filter berubah
+          }}
+          className="border border-gray-300 p-2 rounded w-80"
+        >
+          <option value="">Semua Pelatihan</option>
+          {uniquePelatihan.map((pelatihan, index) => (
+            <option key={index} value={pelatihan}>{pelatihan}</option>
+          ))}
+        </select>
+
+        {/* Input Search */}
+        <input
+          type="text"
+          placeholder="Cari nama peserta..."
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setCurrentPage(1); // reset ke halaman 1 saat search berubah
+          }}
+          className="border border-gray-300 p-2 rounded w-60"
+        />
+      </div>
+
       <PaginatedDataTable 
         title="Daftar Peserta"
         columns={columns}
-        data={dataPeserta}
+        data={filteredData}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
@@ -270,6 +284,8 @@ const PesertaPage = () => {
         onInputChange={handleInputChange}
         onFileChange={handleFileChange}
         fields={modalFields}
+        documentFields={documentFields}
+        showDocuments={true}
       />
     </div>
   );

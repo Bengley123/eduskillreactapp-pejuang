@@ -10,6 +10,13 @@ import RegisterPage from "./component/pages/Registerpage";
 import LandingPage from "./component/pages/Landingpage";
 import DaftarPage from "./component/pages/Daftarpage";
 import DetailPelatihan from "./component/pages/DetailPelatihan";
+import GaleriPage from "./component/pages/Galeripage";
+import DetailBeritaPage from "./component/pages/DetailBeritapage";
+import TentangKamiLPKPage from "./component/pages/TentangKamiLPKpage";
+import TentangKamiLKPPage from "./component/pages/TentangKamiLKPpage";
+import TentangKamiYayasanPage from "./component/pages/TentangKamiYayasanpage";
+import LupaPasswordPage from "./component/pages/LupaPasswordpage";
+
 
 import KetuaDashboardPage from "./component/pages/KetuaDashboardpage"
 
@@ -17,12 +24,13 @@ import AdminPesertaPage from "./component/pages/AdminPesertapage";
 import AdminKontenPage from "./component/pages/AdminKontenpage";
 import AdminPelatihanPage from "./component/pages/AdminPelatihanpage";
 import AdminLaporanPage from "./component/pages/AdminLaporanpage";
+import AdminNotifikasiPage from "./component/pages/AdminNotifikasipage";
 import AdminDashboardPage from "./component/pages/AdminDashboardpage";
 import ProfilePage from "./component/pages/Profilepage";
 import EditProfilePage from "./component/pages/EditProfilePage";
 import StatusPendaftaranPage from "./component/pages/StatusPendaftaranpage";
 import FeedBackPage from "./component/pages/Feedbackpage";
-import TentangKamiPage from "./component/pages/TentangKamipage";
+import AdminFeedbackPage from "./component/pages/AdminFeedbackpage";
 
 
 
@@ -33,11 +41,16 @@ function App() {
       <Route element={<UserLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/daftar" element={<DaftarPage />} />
-        <Route path="/tentangkami" element={<TentangKamiPage />} />
+        <Route path="/tentangkamilpk" element={<TentangKamiLPKPage />} />
+        <Route path="/tentangkamilkp" element={<TentangKamiLKPPage />} />
+        <Route path="/tentangkamiyayasan" element={<TentangKamiYayasanPage />} />
         <Route path="/pelatihan/:id" element={<DetailPelatihan />} />
+        <Route path="/berita/:id" element={<DetailBeritaPage />} />
         <Route path="/statusdaftar" element={<StatusPendaftaranPage />} />
+        <Route path="/galeri" element={<GaleriPage />} />
         <Route path="/feedback" element={<FeedBackPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/lupapassword" element={<LupaPasswordPage />} />
         <Route path="/regis" element={<RegisterPage />} />
         <Route path="/profil" element={<ProfilePage />} />
         <Route path="/editprofil" element={<EditProfilePage />} />
@@ -50,6 +63,8 @@ function App() {
         <Route path="/adkonten" element={<AdminKontenPage />} />
         <Route path="/adpelatihan" element={<AdminPelatihanPage />} />
         <Route path="/adlaporan" element={<AdminLaporanPage />} />
+        <Route path="/adfeedback" element={<AdminFeedbackPage />} />
+        <Route path="/adnotif" element={<AdminNotifikasiPage />} />
       </Route>
 
       <Route element={<KetuaLayout />}>

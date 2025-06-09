@@ -93,7 +93,7 @@ const RegisterForm = () => {
       />
 
       <InputWithLabel
-        label="Nama"
+        label="Nama Lengkap"
         type="text"
         placeholder="Masukkan nama"
         value={form.name}
